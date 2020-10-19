@@ -1,0 +1,35 @@
+---
+title: "Masmovil Gain Estimation"
+author: "Oguzhan Akan"
+date: "May 21, 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = 'D:/masmovil') 
+library(plotly)
+```
+
+### Gain by Diffgroup
+#### On+Off
+```{r echo = FALSE}
+gain_by_diffgroup_all <- read.csv('gain_by_diffgroup_all.csv')
+
+a <- list(
+  title = "Diffgroup",
+  showticklabels = TRUE,
+  nticks = 10
+)
+
+p <- plot_ly(gain_by_diffgroup_all, type='scatter', x = ~diffgroup,
+             y = ~gain, name = 'Gain', mode = 'lines') %>%
+  add_trace(y = ~ap_correction, name = 'AP Correction', mode = 'lines') %>%
+  add_trace(y = ~cp_correction, name = 'CP Correction', mode = 'lines') %>%
+  add_trace(y = ~adjusted_gain, name = 'Adj. Gain', mode = 'lines') %>%
+  layout(title = 'Gain by Diffgroup' , 
+         xaxis = a,
+         yaxis = list(tickformat = "%"))
+
+p
+```
